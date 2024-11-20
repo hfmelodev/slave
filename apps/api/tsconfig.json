@@ -1,0 +1,6 @@
+{
+  "extends": "@slave/tsconfig/node.json",
+  "include": [
+    "src/**/*"
+  ]
+}

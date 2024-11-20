@@ -1,0 +1,23 @@
+{
+  "name": "@slave/api",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "tsx watch src/index.ts"
+  },
+  "dependencies": {
+    "@slave/auth": "workspace:*"
+  },
+  "devDependencies": {
+    "@slave/eslint-config": "workspace:*",
+    "@slave/prettier": "workspace:*",
+    "@slave/tsconfig": "workspace:*",
+    "@types/node": "^22.9.1",
+    "tsx": "^4.19.2"
+  },
+  "prettier": "@slave/prettier",
+  "eslintConfig": {
+    "extends": [
+      "@slave/eslint-config/node"
+    ]
+  }
+}
