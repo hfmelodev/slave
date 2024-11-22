@@ -3,6 +3,7 @@ import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
 
+import { BadRequestError } from '@/http/routes/_errors/bad-request-error'
 import { prisma } from '@/lib/prisma'
 
 export async function authenticationWithPassword(app: FastifyInstance) {
@@ -11,15 +12,12 @@ export async function authenticationWithPassword(app: FastifyInstance) {
     {
       schema: {
         tags: ['auth'],
-        summary: 'Autenticação com e-mail e senha.',
+        summary: 'Autenticação com e-mail e senha',
         body: z.object({
           email: z.string().email(),
           password: z.string(),
         }),
         response: {
-          400: z.object({
-            message: z.string(),
-          }),
           201: z.object({
             token: z.string(),
           }),
@@ -36,13 +34,13 @@ export async function authenticationWithPassword(app: FastifyInstance) {
       })
 
       if (!userFromEmail) {
-        return reply.status(400).send({ message: 'Credenciais inválidas.' })
+        throw new BadRequestError('Credenciais inválidas.')
       }
 
       if (userFromEmail.passwordHash === null) {
-        return reply.status(400).send({
-          message: 'Seu usuário não possui uma senha, utilize o login social.',
-        })
+        throw new BadRequestError(
+          'Seu usuário não possui uma senha, utilize o login social.',
+        )
       }
 
       const isPasswordValid = await compare(
@@ -51,7 +49,7 @@ export async function authenticationWithPassword(app: FastifyInstance) {
       )
 
       if (!isPasswordValid) {
-        return reply.status(400).send({ message: 'Credenciais inválidas.' })
+        throw new BadRequestError('Credenciais inválidas.')
       }
 
       /**
