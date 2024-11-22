@@ -34,6 +34,19 @@ export async function createAccount(app: FastifyInstance) {
         })
       }
 
+      // Divide o e-mail em duas partes, separando pelo caractere '@'.
+      // A segunda parte (o domínio) é atribuída à variável 'domain'.
+      const [, domain] = email.split('@')
+
+      // Verifica se existe uma organização no banco de dados cujo domínio coincide com o domínio do e-mail do usuário.
+      // Além disso, verifica se a organização está configurada para adicionar usuários automaticamente pelo domínio.
+      const autoJoinOrganization = await prisma.organization.findFirst({
+        where: {
+          domain, // O domínio extraído do e-mail é usado como critério de busca.
+          shouldAttachUsersByDomain: true, // Condição para organizações que aceitam usuários automaticamente pelo domínio.
+        },
+      })
+
       const passwordHash = await hash(password, 2)
 
       await prisma.user.create({
@@ -41,6 +54,14 @@ export async function createAccount(app: FastifyInstance) {
           name,
           email,
           passwordHash,
+          member_on: autoJoinOrganization
+            ? {
+                // Se uma organização correspondente foi encontrada:
+                create: {
+                  organizationId: autoJoinOrganization.id, // Associa o usuário a essa organização.
+                },
+              }
+            : undefined, // Caso contrário, não associa o usuário a nenhuma organização.
         },
       })
 

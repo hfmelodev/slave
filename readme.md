@@ -7,7 +7,7 @@ Este projeto contém todo o boilerplate necessário para configurar um SaaS mult
 - [ ] Deve ser capaz de autenticar usando e-mail e senha;
 - [ ] Deve ser capaz de autenticar usando conta do Github;
 - [ ] Deve ser capaz de recuperar senha usando e-mail;
-- [ ] Deve ser capaz de criar uma conta (e-mail, nome e senha);
+- [X] Deve ser capaz de criar uma conta (e-mail, nome e senha);
 
 ### Organizações
 - [ ] Deve ser capaz de criar uma nova organização;
