@@ -2,6 +2,7 @@ import fastifyCors from '@fastify/cors'
 import fastifyJwt from '@fastify/jwt'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUI from '@fastify/swagger-ui'
+import { env } from '@slave/env'
 import fastify from 'fastify'
 import {
   jsonSchemaTransform,
@@ -30,10 +31,18 @@ app.register(fastifySwagger, {
     info: {
       title: 'Slave Next.js SaaS + RBAC',
       description:
-        'API SaaS Completo com Next.js, RBAC e Fastify: Do Zero ao Multi-Tenant com Controle de Acesso Avançado.',
+        'API SaaS Completo com Next.js, RBAC e Fastify: Do Zero ao Multi-Tenant com Controle de Acesso Avançado',
       version: '1.0.0',
     },
-    servers: [],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
   },
   transform: jsonSchemaTransform,
 })
@@ -43,7 +52,7 @@ app.register(fastifySwaggerUI, {
 })
 
 app.register(fastifyJwt, {
-  secret: 'f9BgyrKOERrNCUEGIdGiuYPxiAM68jwSEowgSyhL2X8=',
+  secret: env.JWT_SECRET,
 })
 
 app.register(fastifyCors)
@@ -58,6 +67,6 @@ app.register(requestPasswordRecover)
 app.register(resetPassword)
 app.register(authenticationWithGithub)
 
-app.listen({ port: 3333 }).then(() => {
+app.listen({ port: env.SERVER_PORT }).then(() => {
   console.log('> 🌟 O servidor está ativo e pronto para servir! 💾')
 })
