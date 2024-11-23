@@ -11,6 +11,7 @@ import {
 } from 'fastify-type-provider-zod'
 
 import { errorHandler } from './error-handler'
+import { authenticationWithGithub } from './routes/auth/authentication-with-github'
 import { authenticationWithPassword } from './routes/auth/authentication-with-password'
 import { createAccount } from './routes/auth/create-account'
 import { getProfile } from './routes/auth/get-profile'
@@ -55,6 +56,7 @@ app.register(authenticationWithPassword)
 app.register(getProfile)
 app.register(requestPasswordRecover)
 app.register(resetPassword)
+app.register(authenticationWithGithub)
 
 app.listen({ port: 3333 }).then(() => {
   console.log('> 🌟 O servidor está ativo e pronto para servir! 💾')
