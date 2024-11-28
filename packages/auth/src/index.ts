@@ -63,6 +63,9 @@ export function defineAbilityFor(user: User) {
     },
   })
 
+  ability.can = ability.can.bind(ability)
+  ability.cannot = ability.cannot.bind(ability)
+
   // Retorna as habilidades definidas
   return ability
 }

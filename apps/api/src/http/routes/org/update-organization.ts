@@ -69,20 +69,20 @@ export async function updateOrganization(app: FastifyInstance) {
               'O domínio informado ja pertence a outra organização.',
             )
           }
-
-          await prisma.organization.update({
-            where: {
-              id: organization.id,
-            },
-            data: {
-              name,
-              domain,
-              shouldAttachUsersByDomain,
-            },
-          })
-
-          return reply.status(204).send()
         }
+
+        await prisma.organization.update({
+          where: {
+            id: organization.id,
+          },
+          data: {
+            name,
+            domain,
+            shouldAttachUsersByDomain,
+          },
+        })
+
+        return reply.status(204).send()
       },
     )
 }
