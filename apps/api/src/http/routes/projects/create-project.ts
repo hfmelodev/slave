@@ -31,6 +31,7 @@ export async function createProject(app: FastifyInstance) {
           response: {
             201: z.object({
               projectId: z.string().uuid(),
+              slug: z.string(),
             }),
           },
         },
@@ -77,6 +78,7 @@ export async function createProject(app: FastifyInstance) {
 
         return reply.status(201).send({
           projectId: project.id,
+          slug: project.slug,
         })
       },
     )
