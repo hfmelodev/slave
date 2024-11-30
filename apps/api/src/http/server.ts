@@ -18,13 +18,14 @@ import { createAccount } from './routes/auth/create-account'
 import { getProfile } from './routes/auth/get-profile'
 import { requestPasswordRecover } from './routes/auth/request-password-recovery'
 import { resetPassword } from './routes/auth/reset-password'
-import { createOrganization } from './routes/org/create-organization'
-import { getMembership } from './routes/org/get-membership'
-import { getOrganization } from './routes/org/get-organization'
-import { getOrganizations } from './routes/org/get-organizations'
-import { shutdownOrganization } from './routes/org/shutdown-organization'
-import { transferOrganization } from './routes/org/transfer-organization'
-import { updateOrganization } from './routes/org/update-organization'
+import { createOrganization } from './routes/orgs/create-organization'
+import { getMembership } from './routes/orgs/get-membership'
+import { getOrganization } from './routes/orgs/get-organization'
+import { getOrganizations } from './routes/orgs/get-organizations'
+import { shutdownOrganization } from './routes/orgs/shutdown-organization'
+import { transferOrganization } from './routes/orgs/transfer-organization'
+import { updateOrganization } from './routes/orgs/update-organization'
+import { createProject } from './routes/projects/create-project'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -80,6 +81,7 @@ app.register(getOrganizations)
 app.register(updateOrganization)
 app.register(shutdownOrganization)
 app.register(transferOrganization)
+app.register(createProject)
 
 app.listen({ port: env.SERVER_PORT }).then(() => {
   console.log('> 🌟 O servidor está ativo e pronto para servir! 💾')
