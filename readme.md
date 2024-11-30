@@ -4,17 +4,17 @@ Este projeto contém todo o boilerplate necessário para configurar um SaaS mult
 ## Recursos
 
 ### Autenticação
-- [ ] Deve ser capaz de autenticar usando e-mail e senha;
-- [ ] Deve ser capaz de autenticar usando conta do Github;
-- [ ] Deve ser capaz de recuperar senha usando e-mail;
+- [X] Deve ser capaz de autenticar usando e-mail e senha;
+- [X] Deve ser capaz de autenticar usando conta do Github;
+- [X] Deve ser capaz de recuperar senha usando e-mail;
 - [X] Deve ser capaz de criar uma conta (e-mail, nome e senha);
 
 ### Organizações
-- [ ] Deve ser capaz de criar uma nova organização;
-- [ ] Deve ser capaz de obter organizações às quais o usuário pertence;
-- [ ] Deve ser capaz de atualizar uma organização;
-- [ ] Deve ser capaz de encerrar uma organização;
-- [ ] Deve ser capaz de transferir a propriedade da organização;
+- [X] Deve ser capaz de criar uma nova organização;
+- [X] Deve ser capaz de obter organizações às quais o usuário pertence;
+- [X] Deve ser capaz de atualizar uma organização;
+- [X] Deve ser capaz de encerrar uma organização;
+- [X] Deve ser capaz de transferir a propriedade da organização;
 
 ### Convites
 - [ ] Deve ser capaz de convidar um novo membro (e-mail, função);
@@ -26,10 +26,10 @@ Este projeto contém todo o boilerplate necessário para configurar um SaaS mult
 - [ ] Deve ser capaz de atualizar uma função de membro;
 
 ### Projetos
-- [ ] Deve ser capaz de obter projetos dentro de uma organização;
-- [ ] Deve ser capaz de criar um novo projeto (nome, url, descrição);
-- [ ] Deve ser capaz de atualizar um projeto (nome, url, descrição);
-- [ ] Deve ser capaz de excluir um projeto;
+- [X] Deve ser capaz de obter projetos dentro de uma organização;
+- [X] Deve ser capaz de criar um novo projeto (nome, url, descrição);
+- [X] Deve ser capaz de atualizar um projeto (nome, url, descrição);
+- [X] Deve ser capaz de excluir um projeto;
 
 ### Faturamento
 - [ ] Deve ser capaz de obter detalhes de faturamento para a organização (US$ 20 por projeto / US$ 10 por membro, excluindo a função de faturamento);
