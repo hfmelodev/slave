@@ -8,10 +8,11 @@ import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 
 import githubIcon from '../../../assets/github-icon.svg'
+import { signInWithEmailandPassword } from './actions'
 
 export default function SignInPage() {
   return (
-    <form action="" className="space-y-4">
+    <form action={signInWithEmailandPassword} className="space-y-4">
       <div className="space-y-1">
         <Label htmlFor="email">Seu melhor e-mail</Label>
         <Input id="email" name="email" type="email" />
@@ -23,7 +24,7 @@ export default function SignInPage() {
 
         <Link
           href="/auth/forgot-password"
-          className="text-muted-foreground text-xs font-medium hover:underline"
+          className="text-xs font-medium text-muted-foreground hover:underline"
         >
           Esqueceu sua senha?
         </Link>
