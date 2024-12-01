@@ -12,7 +12,7 @@ interface SignInWithEmailAndPasswordResponse {
 export async function signInWithEmailAndPassword({
   email,
   password,
-}: SignInWithEmailAndPasswordRequest): Promise<SignInWithEmailAndPasswordResponse> {
+}: SignInWithEmailAndPasswordRequest) {
   return await api
     .post('sessions/password', {
       json: {
@@ -20,5 +20,5 @@ export async function signInWithEmailAndPassword({
         password,
       },
     })
-    .json()
+    .json<SignInWithEmailAndPasswordResponse>()
 }
