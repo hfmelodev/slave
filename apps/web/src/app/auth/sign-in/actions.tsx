@@ -1,24 +1,48 @@
 'use server'
 
+import { HTTPError } from 'ky'
+import { z } from 'zod'
+
 import { signInWithEmailAndPassword } from '@/http/auth/signInWithEmailAndPassword'
 
+const signInSchema = z.object({
+  email: z.string().email('Por favor, insira um e-mail válido.'),
+  password: z.string().min(1, 'Por favor, insira uma senha.'),
+})
+
 export async function signInWithEmailandPasswordAction(
-  previousState: unknown, // previousState: retorna o estado anterior do formulário
+  _: unknown, // previousState ou _: retorna o estado anterior do formulário
   data: FormData,
 ) {
-  console.log(previousState)
+  const result = signInSchema.safeParse(Object.fromEntries(data))
 
-  const { email, password } = Object.fromEntries(data)
+  if (!result.success) {
+    const errors = result.error.flatten().fieldErrors
 
-  // Simulando um delay de 2 segundos
-  await new Promise((resolve) => setTimeout(resolve, 2000))
+    return { success: false, message: null, errors }
+  }
 
-  const response = await signInWithEmailAndPassword({
-    email: String(email),
-    password: String(password),
-  })
+  const { email, password } = result.data
 
-  console.log(response)
+  try {
+    const { token } = await signInWithEmailAndPassword({ email, password })
 
-  return 'Sucesso!'
+    console.log({ token })
+  } catch (err) {
+    if (err instanceof HTTPError) {
+      const { message } = await err.response.json()
+
+      return { success: false, message, errors: null }
+    }
+
+    console.error(err)
+
+    return {
+      success: false,
+      message: 'Erro inesperado, tente novamente mais tarde.',
+      errors: null,
+    }
+  }
+
+  return { success: true, message: null, errors: null }
 }

@@ -1,11 +1,12 @@
 'use client'
 
-import { Loader2, Mail } from 'lucide-react'
+import { AlertTriangle, Loader2, Mail } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useActionState } from 'react'
 
 import githubIcon from '@/assets/github-icon.svg'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -14,23 +15,45 @@ import { Separator } from '@/components/ui/separator'
 import { signInWithEmailandPasswordAction } from '../actions'
 
 export function SignInForm() {
-  const [state, formAction, isPending] = useActionState(
+  const [{ success, message, errors }, formAction, isPending] = useActionState(
     signInWithEmailandPasswordAction,
-    null,
+    { success: false, message: null, errors: null },
   )
 
   return (
     <form action={formAction} className="space-y-4">
-      <h1>{state}</h1>
+      {success === false && message && (
+        <Alert variant="destructive">
+          <AlertTriangle className="size-4" />
+          <AlertTitle>Login falhou!</AlertTitle>
+          <AlertDescription>
+            <p>{message}</p>
+          </AlertDescription>
+        </Alert>
+      )}
 
       <div className="space-y-1">
         <Label htmlFor="email">Seu melhor e-mail</Label>
         <Input id="email" name="email" type="email" />
+
+        {/* Dispara uma mensagem de erro se o campo for inválido */}
+        {errors?.email && (
+          <p className="text-xs font-medium text-red-500 dark:text-red-400">
+            {errors.email}
+          </p>
+        )}
       </div>
 
       <div className="space-y-1">
         <Label htmlFor="password">Sua senha</Label>
         <Input id="password" name="password" type="password" />
+
+        {/* Dispara uma mensagem de erro se o campo for inválido */}
+        {errors?.password && (
+          <p className="text-xs font-medium text-red-500 dark:text-red-400">
+            {errors.password}
+          </p>
+        )}
 
         <Link
           href="/auth/forgot-password"
