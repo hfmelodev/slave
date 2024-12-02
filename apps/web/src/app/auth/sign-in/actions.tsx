@@ -11,7 +11,7 @@ const signInSchema = z.object({
 })
 
 export async function signInWithEmailandPasswordAction(
-  _: unknown, // previousState ou _: retorna o estado anterior do formulário
+  // _: unknown, // previousState ou _: retorna o estado anterior do formulário
   data: FormData,
 ) {
   const result = signInSchema.safeParse(Object.fromEntries(data))
