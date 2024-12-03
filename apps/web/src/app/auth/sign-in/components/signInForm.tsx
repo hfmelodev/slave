@@ -3,6 +3,7 @@
 import { AlertTriangle, Loader2, Mail } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 import githubIcon from '@/assets/github-icon.svg'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
@@ -15,8 +16,13 @@ import { useFormState } from '@/hooks/useFormState'
 import { signInWithEmailandPasswordAction } from '../actions'
 
 export function SignInForm() {
+  const router = useRouter()
   const [{ success, message, errors }, handleSubmit, isPending] = useFormState(
     signInWithEmailandPasswordAction,
+    // Direciona o usuário para a página inicial após o envio do formulário com sucesso
+    () => {
+      router.push('/')
+    },
   )
 
   return (
