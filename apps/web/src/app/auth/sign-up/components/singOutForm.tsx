@@ -1,6 +1,6 @@
 'use client'
 
-import { AlertTriangle, Loader2, Mail } from 'lucide-react'
+import { AlertTriangle, Loader2, UserPlus } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -14,15 +14,15 @@ import { Separator } from '@/components/ui/separator'
 import { useFormState } from '@/hooks/useFormState'
 
 import { signInWithGithub } from '../../actions'
-import { signInWithEmailandPasswordAction } from '../actions'
-
-export function SignInForm() {
+import { signUpAction } from '../actions'
+export function SignOutForm() {
   const router = useRouter()
+
   const [{ success, message, errors }, handleSubmit, isPending] = useFormState(
-    signInWithEmailandPasswordAction,
-    // Direciona o usuário para a página inicial após o envio do formulário com sucesso
+    signUpAction,
+    // Direciona o usuário para o login após o envio do formulário com sucesso
     () => {
-      router.push('/')
+      router.push('/auth/sign-in')
     },
   )
 
@@ -32,12 +32,24 @@ export function SignInForm() {
         {success === false && message && (
           <Alert variant="destructive">
             <AlertTriangle className="size-4" />
-            <AlertTitle>Login falhou!</AlertTitle>
+            <AlertTitle>Houve um erro ao criar sua conta!</AlertTitle>
             <AlertDescription>
               <p>{message}</p>
             </AlertDescription>
           </Alert>
         )}
+
+        <div className="space-y-1">
+          <Label htmlFor="name">Nome completo</Label>
+          <Input id="name" name="name" type="text" />
+
+          {/* Dispara uma mensagem de erro se o campo for inválido */}
+          {errors?.name && (
+            <p className="text-xs font-medium text-red-500 dark:text-red-400">
+              {errors.name[0]}
+            </p>
+          )}
+        </div>
 
         <div className="space-y-1">
           <Label htmlFor="email">Seu melhor e-mail</Label>
@@ -61,13 +73,22 @@ export function SignInForm() {
               {errors.password[0]}
             </p>
           )}
+        </div>
 
-          <Link
-            href="/auth/forgot-password"
-            className="text-xs font-medium text-muted-foreground hover:underline"
-          >
-            Esqueceu sua senha?
-          </Link>
+        <div className="space-y-1">
+          <Label htmlFor="password_confirmation">Confirme sua senha</Label>
+          <Input
+            id="password_confirmation"
+            name="password_confirmation"
+            type="password"
+          />
+
+          {/* Dispara uma mensagem de erro se o campo for inválido */}
+          {errors?.password_confirmation && (
+            <p className="text-xs font-medium text-red-500 dark:text-red-400">
+              {errors.password_confirmation[0]}
+            </p>
+          )}
         </div>
 
         <Button type="submit" className="w-full" disabled={isPending}>
@@ -75,14 +96,14 @@ export function SignInForm() {
             <Loader2 className="size-4 animate-spin" />
           ) : (
             <>
-              <Mail className="mr-1 size-4" />
-              Entrar com e-mail
+              <UserPlus className="mr-1 size-4" />
+              Criar conta
             </>
           )}
         </Button>
 
         <Button variant="link" className="w-full" asChild size="sm">
-          <Link href="/auth/sign-up">Criar uma conta</Link>
+          <Link href="/auth/sign-in">Já possue uma conta? Entrar</Link>
         </Button>
       </form>
 
@@ -91,7 +112,7 @@ export function SignInForm() {
       <form action={signInWithGithub}>
         <Button type="submit" variant="outline" className="w-full">
           <Image src={githubIcon} alt="" className="mr-1 size-4 dark:invert" />
-          Entrar com GitHub
+          Criar conta com GitHub
         </Button>
       </form>
     </div>
