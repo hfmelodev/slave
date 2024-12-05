@@ -7,6 +7,7 @@ export default async function AuthLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  // Se o usuário estiver autenticado, redireciona para a home
   if (await isAuthenticated()) {
     redirect('/')
   }
