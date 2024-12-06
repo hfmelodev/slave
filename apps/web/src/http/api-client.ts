@@ -19,8 +19,6 @@ export const api = ky.create({
         // Importando o cookies-next apenas no lado do cliente
         const token = await getCookie('token', { cookies: cookieStore })
 
-        console.log({ token })
-
         if (token) {
           request.headers.set('Authorization', `Bearer ${token}`)
         }
