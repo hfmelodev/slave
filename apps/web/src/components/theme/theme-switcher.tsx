@@ -1,7 +1,8 @@
 'use client'
 
-import { MonitorCog, Moon, Sun } from 'lucide-react'
+import { Moon, Sun, SunMoon } from 'lucide-react'
 import { useTheme } from 'next-themes'
+import { useEffect, useState } from 'react'
 
 import { Button } from '../ui/button'
 import {
@@ -12,30 +13,43 @@ import {
 } from '../ui/dropdown-menu'
 
 export function ThemeSwitcher() {
-  const { resolvedTheme, setTheme } = useTheme()
+  const { setTheme, theme } = useTheme()
+  const [mounted, setMounted] = useState(false)
 
-  console.log({ resolvedTheme })
+  // Certifica que o componente foi montado no cliente
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  // Retorna null enquanto o componente não é montado no cliente
+  if (!mounted) return null
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
-          {resolvedTheme === 'light' && <Sun className="size-4" />}
-          {resolvedTheme === 'dark' && <Moon className="size-4" />}
+        <Button
+          variant="outline"
+          size="icon"
+          className="flex items-center justify-center"
+        >
+          {theme === 'light' && <Sun className="size-4" />}
+          {theme === 'dark' && <Moon className="size-4" />}
+          {theme === 'system' && <SunMoon className="size-4" />}
           <span className="sr-only">Alterar tema</span>
         </Button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme('light')}>
-          <Sun className="mr-1 size-4" />
+          <Sun className="mr-2 h-4 w-4" />
           Claro
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme('dark')}>
-          <Moon className="mr-1 size-4" />
+          <Moon className="mr-2 h-4 w-4" />
           Escuro
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme('system')}>
-          <MonitorCog className="mr-1 size-4" />
+          <SunMoon className="mr-2 h-4 w-4" />
           Sistema
         </DropdownMenuItem>
       </DropdownMenuContent>
