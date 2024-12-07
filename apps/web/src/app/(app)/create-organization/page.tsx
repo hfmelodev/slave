@@ -1,53 +1,22 @@
-// import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { ChevronRight } from 'lucide-react'
+
+import { Header } from '@/components/app/header'
+
+import { OrganizationForm } from './components/organization-form'
 
 export default async function CreateOrganization() {
   return (
-    <div className="space-y-4">
-      <h1 className="text-2xl font-bold">Criar organização</h1>
+    <div className="space-y-4 py-4">
+      <Header />
 
-      <form className="space-y-4">
-        <div className="space-y-1">
-          <Label htmlFor="name">Defina um nome</Label>
-          <Input id="name" name="name" type="text" />
-        </div>
+      <main className="mx-auto w-full max-w-[1200px]">
+        <h1 className="mb-10 flex items-center gap-0.5 text-2xl font-bold tracking-tight">
+          <ChevronRight className="size-6 text-border" />
+          Criar organização
+        </h1>
 
-        <div className="space-y-1">
-          <Label htmlFor="domain">Defina um domínio</Label>
-          <Input
-            id="domain"
-            name="domain"
-            type="text"
-            inputMode="url"
-            placeholder="acme.com"
-          />
-        </div>
-
-        <div className="space-y-1">
-          <div className="flex items-center space-x-3">
-            <Checkbox
-              name="shouldAttachUsersByDomain"
-              id="shouldAttachUsersByDomain"
-            />
-            <label htmlFor="shouldAttachUsersByDomain" className="space-y-1">
-              <span className="text-sm font-medium leading-none">
-                Ingressar automaticamente novos membros por domínio
-              </span>
-              <p className="text-sm text-muted-foreground">
-                Isso convidará automaticamente todos os membros com o mesmo
-                domínio de e-mail para esta organização.
-              </p>
-            </label>
-          </div>
-        </div>
-
-        <Button type="submit" className="w-full font-bold">
-          Salvar organização
-        </Button>
-      </form>
+        <OrganizationForm />
+      </main>
     </div>
   )
 }
