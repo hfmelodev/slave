@@ -14,14 +14,14 @@ export async function shutdownOrganization(app: FastifyInstance) {
     .withTypeProvider<ZodTypeProvider>()
     .register(auth)
     .delete(
-      '/organizations/:organizationId',
+      '/organizations/:slug',
       {
         schema: {
           tags: ['organizations'],
           summary: 'Deletar uma organização',
           security: [{ bearerAuth: [] }],
           params: z.object({
-            organizationId: z.string(),
+            slug: z.string(),
           }),
           response: {
             204: z.null(),
@@ -29,11 +29,11 @@ export async function shutdownOrganization(app: FastifyInstance) {
         },
       },
       async (request, reply) => {
-        const { organizationId } = request.params
+        const { slug } = request.params
 
         const userId = await request.getCurrentUserId()
         const { organization, membership } =
-          await request.getUserMembership(organizationId)
+          await request.getUserMembership(slug)
 
         const authOrganization = organizationSchema.parse(organization)
 

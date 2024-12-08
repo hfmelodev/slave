@@ -35,7 +35,9 @@ export async function OrganizationSwitcher() {
               )}
               <AvatarFallback />
             </Avatar>
-            <span className="line-clamp-1">{currentOrganization.name}</span>
+            <span className="line-clamp-1 font-medium">
+              {currentOrganization.name}
+            </span>
           </>
         ) : (
           <span className="text-muted-foreground">Selecionar organização</span>
