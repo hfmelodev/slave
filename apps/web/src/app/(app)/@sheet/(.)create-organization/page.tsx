@@ -1,16 +1,12 @@
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet'
+import { InterceptedSheetContent } from '@/components/app/intercepted-sheet-content'
+import { Sheet, SheetHeader, SheetTitle } from '@/components/ui/sheet'
 
 import { OrganizationForm } from '../../create-organization/components/organization-form'
 
 export default function CreateOrganization() {
   return (
     <Sheet defaultOpen>
-      <SheetContent>
+      <InterceptedSheetContent>
         <SheetHeader>
           <SheetTitle>Criar organização</SheetTitle>
         </SheetHeader>
@@ -18,7 +14,7 @@ export default function CreateOrganization() {
         <div className="w-full py-4">
           <OrganizationForm />
         </div>
-      </SheetContent>
+      </InterceptedSheetContent>
     </Sheet>
   )
 }
