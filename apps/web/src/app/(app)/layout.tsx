@@ -4,8 +4,10 @@ import { isAuthenticated } from '@/auth/auth'
 
 export default async function AppLayout({
   children,
+  sheet,
 }: Readonly<{
   children: React.ReactNode
+  sheet: React.ReactNode
 }>) {
   // Se o usuário estiver autenticado, redireciona para o login
   const authenticated = await isAuthenticated()
@@ -14,5 +16,10 @@ export default async function AppLayout({
     redirect('/auth/sign-in')
   }
 
-  return <>{children}</>
+  return (
+    <>
+      {children}
+      {sheet}
+    </>
+  )
 }
