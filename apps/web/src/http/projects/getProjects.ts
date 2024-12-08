@@ -9,6 +9,7 @@ interface GetProjectsReponse {
     ownerId: string
     organizationId: string
     description: string
+    avatarUrl?: string | null | undefined
     owner: {
       name: string | null
       id: string
