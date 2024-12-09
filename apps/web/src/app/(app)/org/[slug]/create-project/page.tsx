@@ -1,10 +1,18 @@
 import { ChevronRight } from 'lucide-react'
+import { redirect } from 'next/navigation'
 
+import { ability } from '@/auth/auth'
 import { Header } from '@/components/app/header'
 
 import { ProjectForm } from './components/project-form'
 
 export default async function CreateProject() {
+  const permission = await ability()
+
+  if (permission?.cannot('create', 'Project')) {
+    redirect('/')
+  }
+
   return (
     <div className="space-y-4 py-4">
       <Header />
