@@ -55,7 +55,9 @@ export function ProjectSwitcher() {
                   )}
                   <AvatarFallback />
                 </Avatar>
-                <span className="line-clamp-1">{currentProject.name}</span>
+                <span className="line-clamp-1 font-medium">
+                  {currentProject.name}
+                </span>
               </>
             ) : (
               <span className="text-muted-foreground">Selecionar projeto</span>
