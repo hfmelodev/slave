@@ -2,7 +2,7 @@ import './globals.css'
 
 import type { Metadata } from 'next'
 
-import { Providers } from './(app)/providers'
+import { Providers } from './providers'
 
 export const metadata: Metadata = {
   title: 'Slave Next.js SaaS + RBAC',
