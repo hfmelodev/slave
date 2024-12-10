@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useFormState } from '@/hooks/useFormState'
 
-import { createOrganizationAction } from '../actions'
+import { createOrganizationAction } from '../../create-organization/actions'
 
 export function OrganizationForm() {
   const [{ success, message, errors }, handleSubmit, isPending] = useFormState(
@@ -17,10 +17,7 @@ export function OrganizationForm() {
   )
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="mx-auto flex max-w-2xl flex-col space-y-4"
-    >
+    <form onSubmit={handleSubmit} className="mx-auto flex flex-col space-y-4">
       {success === false && message && (
         <Alert variant="destructive">
           <AlertTriangle className="size-4" />

@@ -2,7 +2,7 @@ import { ChevronRight } from 'lucide-react'
 
 import { Header } from '@/components/app/header'
 
-import { OrganizationForm } from './components/organization-form'
+import { OrganizationForm } from '../org/components/organization-form'
 
 export default async function CreateOrganization() {
   return (
