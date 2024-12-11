@@ -1,7 +1,7 @@
 import { ChevronRight } from 'lucide-react'
 
 import { OrganizationForm } from '@/app/(app)/org/components/organization-form'
-import { ability } from '@/auth/auth'
+import { ability, getCurrentOrg } from '@/auth/auth'
 import {
   Card,
   CardContent,
@@ -9,15 +9,19 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { getOrganization } from '@/http/org/getOrganization'
 
 import { ShutdownOrganization } from './components/shutdown-organization'
 
 export default async function Settings() {
+  const currentOrg = await getCurrentOrg()
   const permissions = await ability()
 
   const canUpdateOrganization = permissions?.can('update', 'Organization')
   const canGetBilling = permissions?.can('get', 'Billing')
   const canShutdownOrganization = permissions?.can('delete', 'Organization')
+
+  const { organization } = await getOrganization(currentOrg!)
 
   return (
     <div className="space-y-4 py-4">
@@ -26,7 +30,7 @@ export default async function Settings() {
         Configurações
       </h1>
 
-      <div className="space-y-4">
+      <div className="mx-auto max-w-3xl space-y-4">
         {canUpdateOrganization && (
           <Card className="mx-auto flex flex-col space-y-4">
             <CardHeader>
@@ -37,7 +41,15 @@ export default async function Settings() {
             </CardHeader>
 
             <CardContent>
-              <OrganizationForm />
+              <OrganizationForm
+                isUpdating
+                initialData={{
+                  name: organization.name,
+                  domain: organization.domain,
+                  shouldAttachUsersByDomain:
+                    organization.shouldAttachUsersByDomain,
+                }}
+              />
             </CardContent>
           </Card>
         )}

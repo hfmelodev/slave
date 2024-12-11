@@ -5,7 +5,7 @@ import { getCurrentOrg } from '@/auth/auth'
 import { Button } from '@/components/ui/button'
 import { shutdownOrganization } from '@/http/org/shutdownOrganization'
 
-export function ShutdownOrganization() {
+export async function ShutdownOrganization() {
   async function handleShutdownOrganization() {
     'use server'
 
@@ -18,9 +18,9 @@ export function ShutdownOrganization() {
     redirect('/')
   }
   return (
-    <form action={handleShutdownOrganization}>
-      <Button type="submit" variant="destructive" className="w-56">
-        <XCircle className="mr-2 size-4" />
+    <form action={handleShutdownOrganization} className="text-center">
+      <Button type="submit" variant="destructive" className="w-1/2">
+        <XCircle className="size-4" />
         Encerrar organização
       </Button>
     </form>
