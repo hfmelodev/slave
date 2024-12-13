@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/card'
 import { getOrganization } from '@/http/org/getOrganization'
 
+import { Billing } from './components/billing'
 import { ShutdownOrganization } from './components/shutdown-organization'
 
 export default async function Settings() {
@@ -54,16 +55,7 @@ export default async function Settings() {
           </Card>
         )}
 
-        {canGetBilling && (
-          <Card className="mx-auto flex flex-col space-y-4">
-            <CardHeader>
-              <CardTitle>Configurações de cobrança</CardTitle>
-              <CardDescription>
-                Atualize os detalhes de cobrança da sua organização
-              </CardDescription>
-            </CardHeader>
-          </Card>
-        )}
+        {canGetBilling && <Billing />}
 
         {canShutdownOrganization && (
           <Card className="mx-auto flex flex-col space-y-4">
