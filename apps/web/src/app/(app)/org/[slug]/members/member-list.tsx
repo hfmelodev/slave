@@ -1,5 +1,5 @@
 import { organizationSchema } from '@slave/auth'
-import { ArrowLeftRight, Crown } from 'lucide-react'
+import { ArrowLeftRight, Crown, UserMinus } from 'lucide-react'
 import Image from 'next/image'
 
 import { ability, getCurrentOrg } from '@/auth/auth'
@@ -9,6 +9,9 @@ import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 import { getMembers } from '@/http/members/getMembers'
 import { getMembership } from '@/http/org/getMembership'
 import { getOrganization } from '@/http/org/getOrganization'
+import { getInitials } from '@/utils/get-initials'
+
+import { removeMemberAction } from './actions'
 
 export async function MemberList() {
   const currentOrg = await getCurrentOrg()
@@ -34,7 +37,11 @@ export async function MemberList() {
                 <TableRow key={member.id}>
                   <TableCell className="py-2.5" style={{ width: 48 }}>
                     <Avatar>
-                      {!member.avatarUrl && <AvatarFallback />}
+                      {!member.avatarUrl && member.name && (
+                        <AvatarFallback>
+                          {getInitials(member.name)}
+                        </AvatarFallback>
+                      )}
                       {member.avatarUrl && (
                         <Image
                           src={member.avatarUrl}
@@ -75,6 +82,24 @@ export async function MemberList() {
                           <ArrowLeftRight className="mr-2 size-4" />
                           Transferir propriedade
                         </Button>
+                      )}
+
+                      {permissions?.can('delete', 'User') && (
+                        // Bind => Uso o bind é um trick para passar o id do membro para a action
+                        <form action={removeMemberAction.bind(null, member.id)}>
+                          <Button
+                            disabled={
+                              member.userId === membership.userId ||
+                              member.userId === organization.ownerId
+                            }
+                            type="submit"
+                            size="sm"
+                            variant="destructive"
+                          >
+                            <UserMinus className="mr-1 size-4" />
+                            Remover
+                          </Button>
+                        </form>
                       )}
                     </div>
                   </TableCell>
