@@ -12,6 +12,7 @@ import { getOrganization } from '@/http/org/getOrganization'
 import { getInitials } from '@/utils/get-initials'
 
 import { removeMemberAction } from './actions'
+import { UpdateMemberRoleSelect } from './update-member-role'
 
 export async function MemberList() {
   const currentOrg = await getCurrentOrg()
@@ -83,6 +84,16 @@ export async function MemberList() {
                           Transferir propriedade
                         </Button>
                       )}
+
+                      <UpdateMemberRoleSelect
+                        memberId={member.id}
+                        value={member.role}
+                        disabled={
+                          member.userId === membership.userId ||
+                          member.userId === organization.ownerId ||
+                          permissions?.cannot('update', 'User')
+                        }
+                      />
 
                       {permissions?.can('delete', 'User') && (
                         // Bind => Uso o bind é um trick para passar o id do membro para a action
