@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 import { getInvites } from '@/http/invites/getInvites'
 
+import { CreateInviteForm } from './components/create-invite-form'
 import { RevokeInviteButton } from './components/revoke-invite'
 
 export async function Invites() {
@@ -20,7 +21,9 @@ export async function Invites() {
             <CardTitle>Convidar membros</CardTitle>
           </CardHeader>
 
-          <CardContent></CardContent>
+          <CardContent>
+            <CreateInviteForm />
+          </CardContent>
         </Card>
       )}
 
